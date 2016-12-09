@@ -9,3 +9,10 @@
 .externalNativeBuild
 .idea/vcs.xml
 app/libs/
+.idea/.name
+.idea/compiler.xml
+.idea/runConfigurations.xml
+.idea/copyright/profiles_settings.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
