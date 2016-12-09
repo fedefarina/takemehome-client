@@ -18,14 +18,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.takemehome.api.TakeMeHomeApi;
 import com.takemehome.http.TakeMeHomeJsonRequest;
 import com.takemehome.http.VolleyClient;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,7 +135,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToRegisterPage() {
         Log.d(TAG, "Go to register");
-        //TODO
+        Intent intent = new Intent();
+        intent.setClass(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void userLogin(String mUsername, String mPassword) {

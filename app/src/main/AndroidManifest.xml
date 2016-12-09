@@ -27,6 +27,12 @@
                 android:label="@string/title_activity_login"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustPan"/>
+
+        <activity
+                android:name=".RegisterActivity"
+                android:label="@string/title_activity_register"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
