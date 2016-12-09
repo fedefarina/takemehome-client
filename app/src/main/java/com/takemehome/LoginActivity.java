@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,12 +18,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.takemehome.api.TakeMeHomeApi;
 import com.takemehome.http.TakeMeHomeJsonRequest;
 import com.takemehome.http.VolleyClient;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
+
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     private EditText mUsernameView;
     private EditText mPasswordView;
@@ -131,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToRegisterPage() {
+        Log.d(TAG, "Go to register");
         //TODO
     }
 
