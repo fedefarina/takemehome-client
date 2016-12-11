@@ -4,10 +4,10 @@ public class TakeMeHomeApi {
 
     private static final String LOG = "TakeMeHomeApi";
 
-    private static final String LOGIN_ENDPOINT = "/api/accounts/login";
-    private static final String REGISTER_ENDPOINT = "/api/accounts/signup";
+    private static final String LOGIN_ENDPOINT = "/login";
+    private static final String REGISTER_ENDPOINT = "/users";
 
-    private static final String APP_SERVER_IP = "192.168.0.1";
+    private static final String APP_SERVER_IP = "172.17.0.3";
     private static final String APP_SERVER_PORT = "3000";
 
     private static String getAppServerURL() {
