@@ -47,18 +47,11 @@ public abstract class TakeMeHomeJsonRequest extends JsonObjectRequest {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
-            JSONObject data = response.optJSONObject("data");
-            if (data != null) {
-                if (statusCode == expectedCode()) {
-                    onSuccess(data);
-                } else {
-                    showFirstError(response);
-                    onError(statusCode);
-                }
+            if (statusCode == expectedCode()) {
+                onSuccess(response);
             } else {
-                if (statusCode == expectedCode()) {
-                    onSuccess(null);
-                }
+                showFirstError(response);
+                onError(statusCode);
             }
         } catch (JSONException e) {
             Log.e("No valid JSON: ", e.toString());
