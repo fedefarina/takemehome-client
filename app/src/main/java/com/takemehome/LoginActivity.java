@@ -154,19 +154,21 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(JSONObject data) {
-                    String token = data.optString("accessToken");
-                    JSONObject profileJSON = data.optJSONObject("profile");
+                    try {
+                        String token = data.getString("alias");
+                        //Save session info
+                        Session instance = Session.getInstance(LoginActivity.this);
+                        instance.setToken(token);
+                        Profile profile = new Profile();
+                        profile.fromJson(data);
+                        instance.setProfile(profile);
 
-                    //Save session info
-                    Session instance = Session.getInstance(LoginActivity.this);
-                    instance.setToken(token);
-                    Profile profile = new Profile();
-                    profile.fromJson(profileJSON);
-                    instance.setProfile(profile);
-
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(i);
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        finish();
+                        startActivity(i);
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.toString());
+                    }
                 }
 
                 @Override

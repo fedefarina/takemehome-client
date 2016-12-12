@@ -2,12 +2,10 @@ package com.takemehome.api;
 
 public class TakeMeHomeApi {
 
-    private static final String LOG = "TakeMeHomeApi";
-
     private static final String LOGIN_ENDPOINT = "/login";
     private static final String REGISTER_ENDPOINT = "/users";
 
-    private static final String APP_SERVER_IP = "192.168.1.36";
+    private static final String APP_SERVER_IP = "192.168.1.42";
     private static final String APP_SERVER_PORT = "3000";
 
     private static String getAppServerURL() {

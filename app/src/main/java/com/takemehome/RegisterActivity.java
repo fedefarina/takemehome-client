@@ -128,8 +128,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (requestCode == Crop.REQUEST_CROP) {
             if (resultCode == RESULT_OK) {
                 Glide.with(this)
-                .load(Crop.getOutput(result))
-                .into(profileIv);
+                        .load(Crop.getOutput(result))
+                        .into(profileIv);
             } else if (resultCode == Crop.RESULT_ERROR) {
                 Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
             }

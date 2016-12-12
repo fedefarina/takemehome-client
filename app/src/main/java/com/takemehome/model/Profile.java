@@ -17,7 +17,6 @@ public class Profile implements Serializable, Parcelable {
     private static final String GENDER = "gender";
     private static final String AGE = "age";
     private static final String PHOTO_PROFILE = "photo_profile";
-    public static final String INTERESTS = "interests";
 
     private int age;
     private String name;
