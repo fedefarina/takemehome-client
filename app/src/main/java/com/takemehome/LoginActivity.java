@@ -152,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     return HttpsURLConnection.HTTP_OK;
                 }
 
+                @SuppressWarnings("Duplicates")
                 @Override
                 public void onSuccess(JSONObject data) {
                     try {
@@ -163,9 +164,9 @@ public class LoginActivity extends AppCompatActivity {
                         profile.fromJson(data);
                         instance.setProfile(profile);
 
-                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                        finish();
-                        startActivity(i);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     } catch (JSONException e) {
                         Log.e(TAG, e.toString());
                     }

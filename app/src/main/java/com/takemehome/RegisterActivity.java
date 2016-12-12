@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,9 @@ import com.soundcloud.android.crop.Crop;
 import com.takemehome.api.TakeMeHomeApi;
 import com.takemehome.http.TakeMeHomeJsonRequest;
 import com.takemehome.http.VolleyClient;
+import com.takemehome.model.Profile;
 import com.takemehome.utils.LocationManager;
+import com.takemehome.utils.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +37,8 @@ import java.io.IOException;
  */
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private static final String TAG = "RegisterActivity";
 
     private static final String KEY_AGE = "age";
     private static final String KEY_NAME = "name";
@@ -232,13 +237,25 @@ public class RegisterActivity extends AppCompatActivity {
 
         final TakeMeHomeJsonRequest registerRequest = new TakeMeHomeJsonRequest(this, Request.Method.POST, TakeMeHomeApi.getRegisterEndpoint(), requestBody) {
 
+            @SuppressWarnings("Duplicates")
             @Override
             public void onSuccess(JSONObject data) {
-                String message = data.optString("message");
-                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(i);
-                finish();
+                try {
+                    String token = data.getString("alias");
+                    //Save session info
+                    Session instance = Session.getInstance(RegisterActivity.this);
+                    instance.setToken(token);
+                    Profile profile = new Profile();
+                    profile.fromJson(data);
+                    instance.setProfile(profile);
+
+                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
             }
 
             @Override
