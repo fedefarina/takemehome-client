@@ -1,10 +1,12 @@
 package com.takemehome.adapter;
 
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,14 +23,20 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final String TAG = ContactsAdapter.class.getSimpleName();
 
     private List<Contact> contacts;
+    private ContactSelectedListener listener;
+
+    public interface ContactSelectedListener {
+        void onContactSelected(Contact contact);
+    }
 
     @Override
     public int getItemCount() {
         return contacts.size();
     }
 
-    public ContactsAdapter(List<Contact> contacts) {
+    public ContactsAdapter(List<Contact> contacts, ContactSelectedListener listener) {
         this.contacts = contacts;
+        this.listener = listener;
     }
 
     @Override
@@ -38,10 +46,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof ContactsViewHolder) {
             ContactsViewHolder contactsHolder = (ContactsViewHolder) holder;
 
-            Contact contact = contacts.get(position);
+            final Contact contact = contacts.get(position);
 
             contactsHolder.textView.setText(contact.getName());
-            contactsHolder.imageView.setBackgroundResource(contact.getImage());
+
+            contactsHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    contact.setChecked(b);
+                }
+            });
+
+            contactsHolder.checkBox.setChecked(contact.getChecked());
+//            contactsHolder.imageView.setBackgroundResource(contact.getImage());
         }
     }
 
@@ -55,15 +72,18 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textView;
         public ImageView imageView;
+        AppCompatCheckBox checkBox;
+
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "Cliecked");
+            listener.onContactSelected(contacts.get(getAdapterPosition()));
         }
 
         public ContactsViewHolder(View v) {
             super(v);
             textView = (TextView) v.findViewById(R.id.contact_name);
             imageView = (ImageView) v.findViewById(R.id.contact_profile);
+            checkBox = (AppCompatCheckBox) v.findViewById(R.id.checkbox);
             v.setOnClickListener(this);
         }
     }

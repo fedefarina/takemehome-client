@@ -1,9 +1,6 @@
 package com.takemehome.model;
 
-import com.takemehome.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.net.Uri;
 
 /**
  * Created by ruitzei on 12/9/16.
@@ -12,11 +9,15 @@ import java.util.List;
 public class Contact {
 
     private String name;
-    private int image;
+    private Uri image;
+    private String number;
+    private Boolean isChecked;
 
-    public Contact(String name, int image) {
+    public Contact(String name, Uri image, String number) {
         this.name = name;
         this.image = image;
+        this.number = number;
+        this.isChecked = false;
     }
 
     public String getName() {
@@ -27,41 +28,27 @@ public class Contact {
         this.name = name;
     }
 
-    public int getImage() {
+    public Uri getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Uri image) {
         this.image = image;
     }
 
-    public static List<Contact> getMockedList() {
-        List<Contact> list = new ArrayList<>();
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
-        list.add(new Contact("Kevin kev", R.mipmap.ic_launcher));
+    public String getNumber() {
+        return number;
+    }
 
-        return list;
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public Boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(Boolean checked) {
+        isChecked = checked;
     }
 }
