@@ -1,8 +1,9 @@
 package com.takemehome;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -18,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     private View btn2;
     private View btn3;
     private View btn4;
+    private Toolbar toolbar;
 
 
     @Override
@@ -25,6 +27,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.home_layout);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar.setTitle("Take me home");
+        setSupportActionBar(toolbar);
 
         btn1 = findViewById(R.id.btn_1);
         btn2 = findViewById(R.id.btn_2);
@@ -41,8 +48,8 @@ public class HomeActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                goToCreateNewGroup();
                 Log.d(TAG, "upper left");
-
             }
         };
     }
@@ -72,5 +79,10 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d(TAG, "Bottom right");
             }
         };
+    }
+
+    public void goToCreateNewGroup() {
+        Intent intent = new Intent(this, NewGroupActivity.class);
+        startActivity(intent);
     }
 }
