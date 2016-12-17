@@ -18,14 +18,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.takemehome.api.TakeMeHomeApi;
 import com.takemehome.http.TakeMeHomeJsonRequest;
 import com.takemehome.http.VolleyClient;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,7 +135,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToRegisterPage() {
         Log.d(TAG, "Go to register");
-        //TODO
+        Intent intent = new Intent();
+        intent.setClass(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void userLogin(String mUsername, String mPassword) {
@@ -152,21 +152,24 @@ public class LoginActivity extends AppCompatActivity {
                     return HttpsURLConnection.HTTP_OK;
                 }
 
+                @SuppressWarnings("Duplicates")
                 @Override
                 public void onSuccess(JSONObject data) {
-                    String token = data.optString("accessToken");
-                    JSONObject profileJSON = data.optJSONObject("profile");
+                    try {
+                        String token = data.getString("alias");
+                        //Save session info
+                        Session instance = Session.getInstance(LoginActivity.this);
+                        instance.setToken(token);
+                        Profile profile = new Profile();
+                        profile.fromJson(data);
+                        instance.setProfile(profile);
 
-                    //Save session info
-                    Session instance = Session.getInstance(LoginActivity.this);
-                    instance.setToken(token);
-                    Profile profile = new Profile();
-                    profile.fromJson(profileJSON);
-                    instance.setProfile(profile);
-
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(i);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.toString());
+                    }
                 }
 
                 @Override

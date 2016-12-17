@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 //If user is logged in
                 if (Session.getInstance(SplashActivity.this).isLoggedIn()) {
-                    intent.setClass(SplashActivity.this, MainActivity.class);
+                    intent.setClass(SplashActivity.this, HomeActivity.class);
                 } else {
                     intent.setClass(SplashActivity.this, LoginActivity.class);
                 }
