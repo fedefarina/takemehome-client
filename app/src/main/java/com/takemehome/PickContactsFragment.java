@@ -31,6 +31,8 @@ import java.util.List;
 public class PickContactsFragment extends Fragment {
 
     Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+//Uri contentUri =
+//        ContactsContract.Contacts.CONTENT_FILTER_URI;
 
     private List<Contact> contacts = new ArrayList<>();
     private ContactsAdapter.ContactSelectedListener listener;
@@ -111,19 +113,25 @@ public class PickContactsFragment extends Fragment {
                 int  mIdColIdx = c.getColumnIndex(ContactsContract.Contacts._ID);
                 int mNumber = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-                if (c.moveToNext()) {
-                    do {
-                        String contactName = c.getString(mNameColIdx);
-                        long contactId = c.getLong(mIdColIdx);
-                        String number = c.getString(mNumber);
+                try {
+                    if (c.moveToNext()) {
+                        do {
+                            String contactName = c.getString(mNameColIdx);
+                            long contactId = c.getLong(mIdColIdx);
+                            String number = c.getString(mNumber);
 
-                        contacts.add(new Contact(contactName, ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId), number));
-                    } while (c.moveToNext());
+
+                            contacts.add(new Contact(contactName, ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId), number));
+                        } while (c.moveToNext());
+                    }
+
+                    Log.d("Size: ", Integer.toString(contacts.size()));
+
+                    mContactListView.setAdapter(new ContactsAdapter(contacts, listener));
+                } finally {
+                    Log.d("finally", "Finall called");
+                    c.close();
                 }
-
-                Log.d("Size: ", Integer.toString(contacts.size()));
-
-                mContactListView.setAdapter(new ContactsAdapter(contacts, listener));
             }
 
             @Override

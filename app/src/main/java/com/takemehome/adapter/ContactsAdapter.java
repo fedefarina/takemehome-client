@@ -1,5 +1,6 @@
 package com.takemehome.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.takemehome.R;
 import com.takemehome.model.Contact;
 
@@ -22,6 +24,7 @@ import java.util.List;
 public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = ContactsAdapter.class.getSimpleName();
 
+    private Context context;
     private List<Contact> contacts;
     private ContactSelectedListener listener;
 
@@ -48,6 +51,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ContactsViewHolder contactsHolder = (ContactsViewHolder) holder;
 
             final Contact contact = contacts.get(position);
+            Log.d(TAG, contact.getImage().toString());
 
             contactsHolder.textView.setText(contact.getName());
 
@@ -69,11 +73,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             contactsHolder.checkBox.setChecked(contact.getChecked());
 //            contactsHolder.imageView.setBackgroundResource(contact.getImage());
+
+            Picasso.with(context)
+                    .load(contact.getImage())
+                    .placeholder(R.mipmap.ic_user)
+                    .error(R.mipmap.ic_user)
+                    .into(contactsHolder.imageView);
+
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
 
         return new ContactsViewHolder(v);
@@ -86,6 +98,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         @Override
         public void onClick(View view) {
+            checkBox.setChecked(!checkBox.isChecked());
         }
 
         public ContactsViewHolder(View v) {
