@@ -9,14 +9,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.takemehome.adapter.ContactsAdapter;
+import com.takemehome.model.Contact;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by ruitzei on 12/9/16.
  */
 
-public class NewGroupActivity extends AppCompatActivity {
+public class NewGroupActivity extends AppCompatActivity implements ContactsAdapter.ContactSelectedListener {
 
     private static final String TAG = NewGroupActivity.class.getSimpleName();
     private Toolbar toolbar;
+    // too lazy to remove indexes whenn contact is unchecked.
+    private HashMap<String, Contact> contactFavs = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,11 +39,21 @@ public class NewGroupActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        FragmentTestContacts newGroupFragment = FragmentTestContacts.newInstance();
+        PickContactsFragment newGroupFragment = PickContactsFragment.newInstance();
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.holder, newGroupFragment)
+                .commit();
+    }
+
+    public void goToPickNameFragment() {
+        GroupNameFragment newGroupFragment = GroupNameFragment.newInstance();
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .add(R.id.holder, newGroupFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -51,13 +69,28 @@ public class NewGroupActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_next: {
                 Log.d("menu", "menu next");
+
+                ((TakeMeHomeApp)getApplication()).setContactFavs(new ArrayList<Contact>(contactFavs.values()));
+                goToPickNameFragment();
                 break;
             } case android.R.id.home: {
                 Log.d("menu", "home");
+                onBackPressed();
                 break;
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onContactSelected(Contact contact) {
+        Log.d("Fragment Test Contacts", "selected contact:" + contact.getName());
+        contactFavs.put(contact.getName(), contact);
+    }
+
+    @Override
+    public void onContactDeselected(Contact contact) {
+        contactFavs.remove(contact.getName());
     }
 }

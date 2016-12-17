@@ -7,11 +7,11 @@
         layout="@layout/toolbar">
     </include>
 
-    <LinearLayout
+    <FrameLayout
         android:orientation="vertical"
         android:id="@+id/holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

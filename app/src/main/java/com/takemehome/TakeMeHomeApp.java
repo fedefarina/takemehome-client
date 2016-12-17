@@ -14,6 +14,7 @@ import java.util.List;
 public class TakeMeHomeApp extends Application {
 
     private List<Contact> contactFavs = new ArrayList<>();
+    private String groupName;
 
     @Override
     public void onCreate() {
@@ -27,5 +28,13 @@ public class TakeMeHomeApp extends Application {
 
     public void setContactFavs(List<Contact> contactFavs) {
         this.contactFavs = contactFavs;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

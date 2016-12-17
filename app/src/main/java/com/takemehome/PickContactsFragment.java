@@ -1,6 +1,7 @@
 package com.takemehome;
 
 import android.content.ContentUris;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,11 +28,14 @@ import java.util.List;
  * Created by ruitzei on 12/17/16.
  */
 
-public class FragmentTestContacts extends Fragment {
+public class PickContactsFragment extends Fragment {
 
     Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
     private List<Contact> contacts = new ArrayList<>();
+    private ContactsAdapter.ContactSelectedListener listener;
+
+
 
 
     private static final String[] PROJECTION = {
@@ -55,11 +59,11 @@ public class FragmentTestContacts extends Fragment {
 
     private RecyclerView mContactListView;
 
-    public static FragmentTestContacts newInstance() {
+    public static PickContactsFragment newInstance() {
         
         Bundle args = new Bundle();
 
-        FragmentTestContacts fragment = new FragmentTestContacts();
+        PickContactsFragment fragment = new PickContactsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -129,11 +133,10 @@ public class FragmentTestContacts extends Fragment {
         });
     }
 
-    private ContactsAdapter.ContactSelectedListener listener = new ContactsAdapter.ContactSelectedListener() {
-        @Override
-        public void onContactSelected(Contact contact) {
-            Log.d("Fragment Test Contacts", "selected contact:" + contact.getName());
-        }
-    };
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
+        this.listener = (ContactsAdapter.ContactSelectedListener) context;
+    }
 }
