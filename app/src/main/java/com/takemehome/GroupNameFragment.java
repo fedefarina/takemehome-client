@@ -55,7 +55,7 @@ public class GroupNameFragment extends Fragment {
         setHasOptionsMenu(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new ConfirmContactsAdapter(((TakeMeHomeApp)getActivity().getApplication()).getContactFavs()));
+        recyclerView.setAdapter(new ConfirmContactsAdapter(((TakeMeHomeApp)getActivity().getApplication()).getContactFavs(), null));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +63,7 @@ public class GroupNameFragment extends Fragment {
                 Log.d(TAG, "group created");
                 ((TakeMeHomeApp)getActivity().getApplication()).setGroupName(editText.getText().toString());
                 Toast.makeText(getActivity(), "Group created", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
+                getActivity().finish();
             }
         });
 

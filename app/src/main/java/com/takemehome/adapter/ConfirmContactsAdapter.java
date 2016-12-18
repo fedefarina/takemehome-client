@@ -25,14 +25,16 @@ public class ConfirmContactsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private Context context;
     private List<Contact> contacts;
+    private ContactsAdapter.ContactSelectedListener listener;
 
     @Override
     public int getItemCount() {
         return contacts.size();
     }
 
-    public ConfirmContactsAdapter(List<Contact> contacts) {
+    public ConfirmContactsAdapter(List<Contact> contacts, ContactsAdapter.ContactSelectedListener listener) {
         this.contacts = contacts;
+        this.listener = listener;
     }
 
     @Override
@@ -72,6 +74,9 @@ public class ConfirmContactsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @Override
         public void onClick(View view) {
+            if (listener != null) {
+                listener.onContactSelected(contacts.get(getAdapterPosition()));
+            }
         }
 
         public ContactsViewHolder(View v) {
