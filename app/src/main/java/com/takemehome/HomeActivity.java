@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.takemehome.model.Contact;
+import com.uber.sdk.android.rides.RideParameters;
+import com.uber.sdk.android.rides.RideRequestButton;
 
 /**
  * Created by ruitzei on 12/9/16.
@@ -26,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView groupName;
     private TextView createGroupText;
+    private RideRequestButton uberBtn;
     private TakeMeHomeApp app;
 
 
@@ -48,11 +51,14 @@ public class HomeActivity extends AppCompatActivity {
 
         groupName = (TextView) findViewById(R.id.home_group_name);
         createGroupText = (TextView) findViewById(R.id.home_create_group);
+        uberBtn = (RideRequestButton) findViewById(R.id.uber_btn);
 
         btn1.setOnClickListener(getBtn1Listener());
         btn2.setOnClickListener(getBtn2Listener());
         btn3.setOnClickListener(getBtn3Listener());
         btn4.setOnClickListener(getBtn4Listener());
+
+        setupUber();
     }
 
     public View.OnClickListener getBtn1Listener() {
@@ -129,5 +135,16 @@ public class HomeActivity extends AppCompatActivity {
         Contact contact = app.getContactFavs().get(0);
         callIntent.setData(Uri.parse("tel:"+contact.getNumber()));
         startActivity(callIntent);
+    }
+
+    // Takes us to facultad de ingenieria and drops at alto palermo
+    public void setupUber() {
+        RideParameters rideParams = new RideParameters.Builder()
+                .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
+                .setPickupLocation(-34.617679, -58.368306, "Facultad de Ingenieria", ",Paseo Colon 850")
+                .setDropoffLocation(-34.587765, -58.410256, "Casa de Kevin", "Calle falsa 1234")
+                .build();
+
+        uberBtn.setRideParameters(rideParams);
     }
 }
