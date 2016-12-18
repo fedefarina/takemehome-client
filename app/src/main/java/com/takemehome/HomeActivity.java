@@ -25,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     private View btn4;
     private Toolbar toolbar;
     private TextView groupName;
+    private TextView createGroupText;
     private TakeMeHomeApp app;
 
 
@@ -44,7 +45,9 @@ public class HomeActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.btn_2);
         btn3 = findViewById(R.id.btn_3);
         btn4 = findViewById(R.id.btn_4);
+
         groupName = (TextView) findViewById(R.id.home_group_name);
+        createGroupText = (TextView) findViewById(R.id.home_create_group);
 
         btn1.setOnClickListener(getBtn1Listener());
         btn2.setOnClickListener(getBtn2Listener());
@@ -56,8 +59,15 @@ public class HomeActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToCreateNewGroup();
                 Log.d(TAG, "upper left");
+
+                // If no group was created, we let the user create a new one.
+                if (app.getContactFavs() == null) {
+                    goToCreateNewGroup();
+                } else {
+                    //if group was created, we let the user pick his favourite contact.
+                    goToPickFavouriteContact();
+                }
             }
         };
     }
@@ -98,12 +108,20 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToPickFavouriteContact() {
+        Intent intent = new Intent(this, FavouriteContactActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
         String groupText = app.getGroupName() != null ? "Current group: " + app.getGroupName() : "No Group created";
         groupName.setText(groupText);
+
+        String createText = app.getGroupName() != null ? "Pick fav" : "Create new group";
+        createGroupText.setText(createText);
     }
 
     public void callContact() {

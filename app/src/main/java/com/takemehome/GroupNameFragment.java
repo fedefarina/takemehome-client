@@ -55,7 +55,7 @@ public class GroupNameFragment extends Fragment {
         setHasOptionsMenu(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new ConfirmContactsAdapter(((TakeMeHomeApp)getActivity().getApplication()).getContactFavs()));
+        recyclerView.setAdapter(new ConfirmContactsAdapter(((TakeMeHomeApp)getActivity().getApplication()).getContactFavs(), null));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
