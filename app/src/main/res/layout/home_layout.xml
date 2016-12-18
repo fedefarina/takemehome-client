@@ -18,40 +18,72 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <View
-                android:id="@+id/btn_1"
-                android:layout_weight="1"
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:background="@color/colorPrimary">
-            </View>
-            <View
-                android:id="@+id/btn_2"
                 android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/btn_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:background="@color/colorPrimary">
+                </View>
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create group"/>
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:background="@color/colorAccent">
-            </View>
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/btn_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:background="@color/colorAccent">
+                </View>
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <View
-                android:id="@+id/btn_3"
-                android:layout_weight="1"
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:background="@color/textColorPrimary">
-            </View>
-            <View
-                android:id="@+id/btn_4"
                 android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/btn_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:background="@color/textColorPrimary">
+                </View>
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:background="@color/colorPrimaryDark">
-            </View>
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/btn_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:background="@color/colorPrimaryDark">
+                </View>
+                <TextView
+                    android:id="@+id/home_group_name"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:text="Call group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

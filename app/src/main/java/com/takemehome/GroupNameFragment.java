@@ -63,7 +63,7 @@ public class GroupNameFragment extends Fragment {
                 Log.d(TAG, "group created");
                 ((TakeMeHomeApp)getActivity().getApplication()).setGroupName(editText.getText().toString());
                 Toast.makeText(getActivity(), "Group created", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
+                getActivity().finish();
             }
         });
 

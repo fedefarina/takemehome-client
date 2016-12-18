@@ -120,7 +120,6 @@ public class PickContactsFragment extends Fragment {
                             long contactId = c.getLong(mIdColIdx);
                             String number = c.getString(mNumber);
 
-
                             contacts.add(new Contact(contactName, ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId), number));
                         } while (c.moveToNext());
                     }

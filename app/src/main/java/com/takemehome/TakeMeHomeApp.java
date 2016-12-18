@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.takemehome.model.Contact;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class TakeMeHomeApp extends Application {
 
-    private List<Contact> contactFavs = new ArrayList<>();
+    private List<Contact> contactFavs;
     private String groupName;
 
     @Override

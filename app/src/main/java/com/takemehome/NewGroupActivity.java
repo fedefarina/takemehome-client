@@ -13,7 +13,7 @@ import com.takemehome.adapter.ContactsAdapter;
 import com.takemehome.model.Contact;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ruitzei on 12/9/16.
@@ -24,7 +24,7 @@ public class NewGroupActivity extends AppCompatActivity implements ContactsAdapt
     private static final String TAG = NewGroupActivity.class.getSimpleName();
     private Toolbar toolbar;
     // too lazy to remove indexes whenn contact is unchecked.
-    private HashMap<String, Contact> contactFavs = new HashMap<>();
+    private List<Contact> contactFavs = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class NewGroupActivity extends AppCompatActivity implements ContactsAdapt
             case R.id.menu_next: {
                 Log.d("menu", "menu next");
 
-                ((TakeMeHomeApp)getApplication()).setContactFavs(new ArrayList<Contact>(contactFavs.values()));
+                ((TakeMeHomeApp)getApplication()).setContactFavs(contactFavs);
                 goToPickNameFragment();
                 break;
             } case android.R.id.home: {
@@ -86,11 +86,11 @@ public class NewGroupActivity extends AppCompatActivity implements ContactsAdapt
     @Override
     public void onContactSelected(Contact contact) {
         Log.d("Fragment Test Contacts", "selected contact:" + contact.getName());
-        contactFavs.put(contact.getName(), contact);
+        contactFavs.add(contact);
     }
 
     @Override
     public void onContactDeselected(Contact contact) {
-        contactFavs.remove(contact.getName());
+        contactFavs.remove(contact);
     }
 }

@@ -1,11 +1,15 @@
 package com.takemehome;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import com.takemehome.model.Contact;
 
 /**
  * Created by ruitzei on 12/9/16.
@@ -20,6 +24,8 @@ public class HomeActivity extends AppCompatActivity {
     private View btn3;
     private View btn4;
     private Toolbar toolbar;
+    private TextView groupName;
+    private TakeMeHomeApp app;
 
 
     @Override
@@ -27,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.home_layout);
+        app = (TakeMeHomeApp)getApplication();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -37,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.btn_2);
         btn3 = findViewById(R.id.btn_3);
         btn4 = findViewById(R.id.btn_4);
+        groupName = (TextView) findViewById(R.id.home_group_name);
 
         btn1.setOnClickListener(getBtn1Listener());
         btn2.setOnClickListener(getBtn2Listener());
@@ -77,6 +85,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Bottom right");
+
+                if (app.getContactFavs() != null) {
+                    callContact();
+                }
             }
         };
     }
@@ -84,5 +96,20 @@ public class HomeActivity extends AppCompatActivity {
     public void goToCreateNewGroup() {
         Intent intent = new Intent(this, NewGroupActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String groupText = app.getGroupName() != null ? "Current group: " + app.getGroupName() : "No Group created";
+        groupName.setText(groupText);
+    }
+
+    public void callContact() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        Contact contact = app.getContactFavs().get(0);
+        callIntent.setData(Uri.parse("tel:"+contact.getNumber()));
+        startActivity(callIntent);
     }
 }
