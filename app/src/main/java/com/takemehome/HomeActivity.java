@@ -14,22 +14,27 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import com.takemehome.model.Contact;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
 import com.uber.sdk.android.rides.RideParameters;
 import com.uber.sdk.android.rides.RideRequestButton;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by ruitzei on 12/9/16.
  */
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
+
+    public static final double TO_LOCATION_LATITUDE = -34.587765;
+    public static final double TO_LOCATION_LONGITUDE = -58.410256;
+    public static final double FROM_LOCATION_LATITUDE = -34.617679;
+    public static final double FROM_LOCATION_LONGITUDE = -58.368306;
 
     private View btn1;
     private View mapBtn;
@@ -48,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        app = (TakeMeHomeApp)getApplication();
+        app = (TakeMeHomeApp) getApplication();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -90,7 +95,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", -34.5830245, -58.4192859, "Where the party is at");
+                //To Mocked location
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE, "Where the party is at");
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
                 startActivity(intent);
@@ -178,17 +184,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public void callContact() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        Contact contact = app.getContactFavs().get(0);
-        callIntent.setData(Uri.parse("tel:"+contact.getNumber()));
-        startActivity(callIntent);
+        final List<Contact> contactFavs = app.getContactFavs();
+        if (contactFavs.size() > 0) {
+            Contact contact = contactFavs.get(0);
+            callIntent.setData(Uri.parse("tel:" + contact.getNumber()));
+            startActivity(callIntent);
+        } else {
+            //todo show group creation activity?
+        }
     }
 
     // Takes us to facultad de ingenieria and drops at alto palermo
     public void setupUber() {
         RideParameters rideParams = new RideParameters.Builder()
                 .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
-                .setPickupLocation(-34.617679, -58.368306, "Facultad de Ingenieria", ",Paseo Colon 850")
-                .setDropoffLocation(-34.587765, -58.410256, "Casa de Kevin", "Calle falsa 1234")
+                .setPickupLocation(FROM_LOCATION_LATITUDE, FROM_LOCATION_LONGITUDE, "Facultad de Ingenieria", ",Paseo Colon 850")
+                .setDropoffLocation(TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE, "Casa de Kevin", "Calle falsa 1234")
                 .build();
 
         uberBtn.setRideParameters(rideParams);

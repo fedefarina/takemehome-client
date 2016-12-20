@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.takemehome.adapter.ContactsAdapter;
 import com.takemehome.model.Contact;
 
@@ -34,12 +33,14 @@ public class NewGroupActivity extends AppCompatActivity implements ContactsAdapt
         setContentView(R.layout.group_create_layout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Group creation");
+        toolbar.setTitle(getString(R.string.create_group));
 
         setSupportActionBar(toolbar);
+
+        //noinspection ConstantConditions
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         PickContactsFragment newGroupFragment = PickContactsFragment.newInstance();
         FragmentManager fm = getSupportFragmentManager();
@@ -70,10 +71,11 @@ public class NewGroupActivity extends AppCompatActivity implements ContactsAdapt
             case R.id.menu_next: {
                 Log.d("menu", "menu next");
 
-                ((TakeMeHomeApp)getApplication()).setContactFavs(contactFavs);
+                ((TakeMeHomeApp) getApplication()).setContactFavs(contactFavs);
                 goToPickNameFragment();
                 break;
-            } case android.R.id.home: {
+            }
+            case android.R.id.home: {
                 Log.d("menu", "home");
                 onBackPressed();
                 break;
