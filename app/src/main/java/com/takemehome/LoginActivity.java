@@ -17,16 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.Request;
-import com.takemehome.api.TakeMeHomeApi;
-import com.takemehome.http.TakeMeHomeJsonRequest;
-import com.takemehome.http.VolleyClient;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A login screen that offers login via username/password.
@@ -121,13 +115,13 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-   //     if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-     //       focusView.requestFocus();
-  //      } else {
-            userLogin(username, password);
-  //      }
+        //     if (cancel) {
+        // There was an error; don't attempt login and focus the first
+        // form field with an error.
+        //       focusView.requestFocus();
+        //      } else {
+        userLogin(username, password);
+        //      }
     }
 
     private void goToRegisterPage() {
@@ -169,9 +163,9 @@ public class LoginActivity extends AppCompatActivity {
             instance.setProfile(profile);
 
 
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(i);
+            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+            finish();
+            startActivity(i);
              /*   }
 
                 @Override
