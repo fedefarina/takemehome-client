@@ -21,6 +21,8 @@ import com.takemehome.utils.Session;
 import com.uber.sdk.android.rides.RideParameters;
 import com.uber.sdk.android.rides.RideRequestButton;
 
+import java.util.Locale;
+
 /**
  * Created by ruitzei on 12/9/16.
  */
@@ -30,9 +32,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private View btn1;
-    private View btn2;
-    private View btn3;
-    private View btn4;
+    private View mapBtn;
+    private View emergencyCallBtn;
+    private View favoriteCallBtn;
+
     private Toolbar toolbar;
     private TextView groupName;
     private TextView createGroupText;
@@ -70,30 +73,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         emailHeader.setText(profile.getEmail());
 
 
-        btn2 = findViewById(R.id.mapa);
-        btn3 = findViewById(R.id.emergency_call);
-        btn4 = findViewById(R.id.favorite_call);
+        mapBtn = findViewById(R.id.mapa);
+        emergencyCallBtn = findViewById(R.id.emergency_call);
+        favoriteCallBtn = findViewById(R.id.favorite_call);
 
 
         uberBtn = (RideRequestButton) findViewById(R.id.uber_btn);
-
-        btn2.setOnClickListener(getBtn2Listener());
-        btn3.setOnClickListener(getBtn3Listener());
-        btn4.setOnClickListener(getBtn4Listener());
+        mapBtn.setOnClickListener(goToMapBtnListener());
+        emergencyCallBtn.setOnClickListener(getEmergencyCallBtnListener());
+        favoriteCallBtn.setOnClickListener(getFavoriteBtnListener());
 
         setupUber();
     }
 
-    public View.OnClickListener  getBtn2Listener() {
+    public View.OnClickListener goToMapBtnListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "upper right");
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", -34.5830245, -58.4192859, "Where the party is at");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                startActivity(intent);
             }
         };
     }
 
-    public View.OnClickListener  getBtn3Listener() {
+    public View.OnClickListener getEmergencyCallBtnListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +107,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         };
     }
 
-    public View.OnClickListener  getBtn4Listener() {
+    public View.OnClickListener getFavoriteBtnListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
