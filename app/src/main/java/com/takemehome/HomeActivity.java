@@ -3,13 +3,21 @@ package com.takemehome;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.takemehome.model.Contact;
+import com.takemehome.model.Profile;
+import com.takemehome.utils.Session;
 import com.uber.sdk.android.rides.RideParameters;
 import com.uber.sdk.android.rides.RideRequestButton;
 
@@ -17,7 +25,7 @@ import com.uber.sdk.android.rides.RideRequestButton;
  * Created by ruitzei on 12/9/16.
  */
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -36,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.home_layout);
+        setContentView(R.layout.activity_main);
         app = (TakeMeHomeApp)getApplication();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,38 +52,36 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setTitle("Take me home");
         setSupportActionBar(toolbar);
 
-        btn1 = findViewById(R.id.btn_1);
-        btn2 = findViewById(R.id.btn_2);
-        btn3 = findViewById(R.id.btn_3);
-        btn4 = findViewById(R.id.btn_4);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-        groupName = (TextView) findViewById(R.id.home_group_name);
-        createGroupText = (TextView) findViewById(R.id.home_create_group);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Profile profile = Session.getInstance(this).getProfile();
+
+        TextView nameHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nameProf);
+        nameHeader.setText(profile.getName());
+
+        TextView emailHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.emailProf);
+        emailHeader.setText(profile.getEmail());
+
+
+        btn2 = findViewById(R.id.mapa);
+        btn3 = findViewById(R.id.emergency_call);
+        btn4 = findViewById(R.id.favorite_call);
+
+
         uberBtn = (RideRequestButton) findViewById(R.id.uber_btn);
 
-        btn1.setOnClickListener(getBtn1Listener());
         btn2.setOnClickListener(getBtn2Listener());
         btn3.setOnClickListener(getBtn3Listener());
         btn4.setOnClickListener(getBtn4Listener());
 
         setupUber();
-    }
-
-    public View.OnClickListener getBtn1Listener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "upper left");
-
-                // If no group was created, we let the user create a new one.
-                if (app.getContactFavs() == null) {
-                    goToCreateNewGroup();
-                } else {
-                    //if group was created, we let the user pick his favourite contact.
-                    goToPickFavouriteContact();
-                }
-            }
-        };
     }
 
     public View.OnClickListener  getBtn2Listener() {
@@ -120,14 +126,49 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
-        String groupText = app.getGroupName() != null ? "Current group: " + app.getGroupName() : "No Group created";
-        groupName.setText(groupText);
 
-        String createText = app.getGroupName() != null ? "Pick fav" : "Create new group";
-        createGroupText.setText(createText);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_settings) {
+
+        } else if (id == R.id.nav_acc_group) {
+            // If no group was created, we let the user create a new one.
+            if (app.getContactFavs() == null) {
+                goToCreateNewGroup();
+            } else {
+                //if group was created, we let the user pick his favourite contact.
+                goToPickFavouriteContact();
+            }
+        } else if (id == R.id.nav_logout) {
+            Session.getInstance(this).logout();
+            Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+            finish();
+            startActivity(i);
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public void callContact() {
