@@ -1,12 +1,15 @@
 package com.takemehome;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -177,6 +180,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_settings) {
+            sendNotification();
 
         } else if (id == R.id.nav_acc_group) {
             // If no group was created, we let the user create a new one.
@@ -224,5 +228,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .build();
 
         uberBtn.setRideParameters(rideParams);
+    }
+
+    public void sendNotification() {
+        // Create a WearableExtender to add functionality for wearables
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setHintHideIcon(true)
+                        .setBackground(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.emergency));
+
+        // Create a NotificationCompat.Builder to build a standard notification
+        // then extend it with the WearableExtender
+        Notification notif = new NotificationCompat.Builder(getApplicationContext())
+                .setContentTitle("Returning home...")
+                .setContentText("Content text")
+                .setSmallIcon(R.mipmap.ic_user)
+                .extend(wearableExtender)
+                .build();
+
+        // Get an instance of the NotificationManager service
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(getApplicationContext());
+
+        // Issue the notification with notification manager.
+        notificationManager.notify(1101, notif);
     }
 }
