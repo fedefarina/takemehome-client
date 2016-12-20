@@ -9,7 +9,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
-
-    private static final String TAG = LoginActivity.class.getSimpleName();
 
     private EditText mUsernameView;
     private EditText mPasswordView;
@@ -124,20 +121,17 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (cancel) {
+   //     if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            focusView.requestFocus();
-        } else {
+     //       focusView.requestFocus();
+  //      } else {
             userLogin(username, password);
-        }
+  //      }
     }
 
     private void goToRegisterPage() {
-        Log.d(TAG, "Go to register");
-        Intent intent = new Intent();
-        intent.setClass(this, RegisterActivity.class);
-        startActivity(intent);
+        //TODO
     }
 
     private void userLogin(String mUsername, String mPassword) {
@@ -146,31 +140,39 @@ public class LoginActivity extends AppCompatActivity {
         if (requestBody != null) {
             //todo show loading
 
-            final TakeMeHomeJsonRequest mathAppJsonRequest = new TakeMeHomeJsonRequest(this, Request.Method.POST, TakeMeHomeApi.getLoginEndpoint(), requestBody) {
+      /*      final TakeMeHomeJsonRequest mathAppJsonRequest = new TakeMeHomeJsonRequest(this, Request.Method.POST, TakeMeHomeApi.getLoginEndpoint(), requestBody) {
                 @Override
                 public int expectedCode() {
                     return HttpsURLConnection.HTTP_OK;
                 }
 
-                @SuppressWarnings("Duplicates")
                 @Override
-                public void onSuccess(JSONObject data) {
-                    try {
-                        String token = data.getString("alias");
-                        //Save session info
-                        Session instance = Session.getInstance(LoginActivity.this);
-                        instance.setToken(token);
-                        Profile profile = new Profile();
-                        profile.fromJson(data);
-                        instance.setProfile(profile);
+                public void onSuccess(JSONObject data) {*/
+            String token = "15442";
+            JSONObject profileJSON = new JSONObject();
+            try {
+                profileJSON.putOpt("name", mUsername);
+                profileJSON.putOpt("age", 25);
+                profileJSON.putOpt("email", "sebastian.a.rocha@hotmail.com");
+                profileJSON.putOpt("gender", "M");
+                profileJSON.putOpt("photo_profile", "asd");
+                profileJSON.putOpt("alias", "sd");
+            } catch (JSONException e) {
+                //Will be OK
+            }
 
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.toString());
-                    }
-                }
+            //Save session info
+            Session instance = Session.getInstance(LoginActivity.this);
+            instance.setToken(token);
+            Profile profile = new Profile();
+            profile.fromJson(profileJSON);
+            instance.setProfile(profile);
+
+
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    finish();
+                    startActivity(i);
+             /*   }
 
                 @Override
                 public void onError(int statusCode) {
@@ -184,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
             };
 
 
-            VolleyClient.getInstance(LoginActivity.this).getRequestQueue().add(mathAppJsonRequest);
+            VolleyClient.getInstance(LoginActivity.this).getRequestQueue().add(mathAppJsonRequest);*/
         }
     }
 
