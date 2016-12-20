@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.takemehome.model.Contact;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
@@ -35,6 +38,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public static final double TO_LOCATION_LONGITUDE = -58.410256;
     public static final double FROM_LOCATION_LATITUDE = -34.617679;
     public static final double FROM_LOCATION_LONGITUDE = -58.368306;
+    private static final String SAME_NUMBER = "107";
 
     private View btn1;
     private View mapBtn;
@@ -46,6 +50,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView createGroupText;
     private RideRequestButton uberBtn;
     private TakeMeHomeApp app;
+
+    private MenuItem createGroupMenu;
 
 
     @Override
@@ -88,6 +94,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         emergencyCallBtn.setOnClickListener(getEmergencyCallBtnListener());
         favoriteCallBtn.setOnClickListener(getFavoriteBtnListener());
 
+        // We want to change the text once a group is created.
+        createGroupMenu = navigationView.getMenu().getItem(0);
+        groupName = (TextView) findViewById(R.id.current_group_text);
+
         setupUber();
     }
 
@@ -109,6 +119,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Bottom left");
+                callSame();
             }
         };
     }
@@ -121,6 +132,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 if (app.getContactFavs() != null) {
                     callContact();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No group created yet...", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -150,6 +163,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
+        if (app.getGroupName() != null) {
+            createGroupMenu.setTitle("Pick favourite contact");
+            groupName.setText("Current group is: " + app.getGroupName());
+        }
 
     }
 
@@ -182,16 +199,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void callContact() {
+    public void callAbstract(String phoneNumber) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + phoneNumber));
+        startActivity(callIntent);
+    }
+
+    public void callContact() {
         final List<Contact> contactFavs = app.getContactFavs();
-        if (contactFavs.size() > 0) {
-            Contact contact = contactFavs.get(0);
-            callIntent.setData(Uri.parse("tel:" + contact.getNumber()));
-            startActivity(callIntent);
-        } else {
-            //todo show group creation activity?
-        }
+        Contact contact = contactFavs.get(0);
+        callAbstract(contact.getNumber());
+    }
+
+    public void callSame() {
+        callAbstract(SAME_NUMBER);
     }
 
     // Takes us to facultad de ingenieria and drops at alto palermo
