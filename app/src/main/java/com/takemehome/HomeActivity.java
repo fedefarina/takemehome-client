@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RideRequestButton uberBtn;
     private TakeMeHomeApp app;
 
+    private MenuItem createGroupMenu;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mapBtn.setOnClickListener(goToMapBtnListener());
         emergencyCallBtn.setOnClickListener(getEmergencyCallBtnListener());
         favoriteCallBtn.setOnClickListener(getFavoriteBtnListener());
+
+        // We want to change the text once a group is created.
+        createGroupMenu = navigationView.getMenu().getItem(0);
+        groupName = (TextView) findViewById(R.id.current_group_text);
 
         setupUber();
     }
@@ -156,6 +163,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
+        if (app.getGroupName() != null) {
+            createGroupMenu.setTitle("Pick favourite contact");
+            groupName.setText("Current group is: " + app.getGroupName());
+        }
 
     }
 
