@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.takemehome.model.Contact;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public static final double TO_LOCATION_LONGITUDE = -58.410256;
     public static final double FROM_LOCATION_LATITUDE = -34.617679;
     public static final double FROM_LOCATION_LONGITUDE = -58.368306;
+    private static final String SAME_NUMBER = "107";
 
     private View btn1;
     private View mapBtn;
@@ -109,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Bottom left");
+                callSame();
             }
         };
     }
@@ -121,6 +125,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 if (app.getContactFavs() != null) {
                     callContact();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No group created yet...", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -182,16 +188,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void callContact() {
+    public void callAbstract(String phoneNumber) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + phoneNumber));
+        startActivity(callIntent);
+    }
+
+    public void callContact() {
         final List<Contact> contactFavs = app.getContactFavs();
-        if (contactFavs.size() > 0) {
-            Contact contact = contactFavs.get(0);
-            callIntent.setData(Uri.parse("tel:" + contact.getNumber()));
-            startActivity(callIntent);
-        } else {
-            //todo show group creation activity?
-        }
+        Contact contact = contactFavs.get(0);
+        callAbstract(contact.getNumber());
+    }
+
+    public void callSame() {
+        callAbstract(SAME_NUMBER);
     }
 
     // Takes us to facultad de ingenieria and drops at alto palermo
