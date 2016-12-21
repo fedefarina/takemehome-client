@@ -22,7 +22,6 @@ public class MainActivity extends WearableActivity implements SensorEventListene
     private TextView mTextView;
     private ImageButton btnStart;
     private ImageButton btnPause;
-    private Drawable imgStart;
     private SensorManager mSensorManager;
     private Sensor mHeartRateSensor;
 

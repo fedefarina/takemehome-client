@@ -2,7 +2,6 @@ package com.takemehome;
 
 import android.app.Notification;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +28,8 @@ import com.uber.sdk.android.rides.RideRequestButton;
 import java.util.List;
 import java.util.Locale;
 
+import static com.takemehome.utils.TakeMeHomeConstants.*;
+
 /**
  * Created by ruitzei on 12/9/16.
  */
@@ -37,10 +38,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
-    public static final double TO_LOCATION_LATITUDE = -34.587765;
-    public static final double TO_LOCATION_LONGITUDE = -58.410256;
-    public static final double FROM_LOCATION_LATITUDE = -34.617679;
-    public static final double FROM_LOCATION_LONGITUDE = -58.368306;
     private static final String SAME_NUMBER = "107";
 
     private View btn1;
@@ -93,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         emergencyCallBtn = findViewById(R.id.emergency_call);
         favoriteCallBtn = findViewById(R.id.favorite_call);
 
-        btn1 =  findViewById(R.id.imageButton5);
+        btn1 = findViewById(R.id.imageButton5);
         uberBtn = (RideRequestButton) findViewById(R.id.uber_btn);
         mapBtn.setOnClickListener(goToMapBtnListener());
         emergencyCallBtn.setOnClickListener(getEmergencyCallBtnListener());
@@ -192,9 +189,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_settings) {
+        if (id == R.id.nav_find_friends) {
             sendNotification();
-
+            Intent i = new Intent(this, FindFriendsActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_acc_group) {
             // If no group was created, we let the user create a new one.
             if (app.getContactFavs() == null) {
@@ -205,10 +203,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         } else if (id == R.id.nav_logout) {
             Session.getInstance(this).logout();
-            Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+            Intent i = new Intent(this, LoginActivity.class);
             finish();
             startActivity(i);
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

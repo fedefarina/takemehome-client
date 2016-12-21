@@ -50,6 +50,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
+        <activity android:name=".FindFriendsActivity"
+                  android:label="@string/find_friends"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyDv1-n9QVS0raagg3C5ifxJfYgkycK5Sjk" />
         |
     </application>
 

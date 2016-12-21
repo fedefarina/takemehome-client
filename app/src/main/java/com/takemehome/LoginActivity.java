@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,15 +18,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.Request;
+import com.takemehome.api.TakeMeHomeApi;
+import com.takemehome.http.TakeMeHomeJsonRequest;
+import com.takemehome.http.VolleyClient;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * A login screen that offers login via username/password.
  */
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
@@ -132,41 +141,31 @@ public class LoginActivity extends AppCompatActivity {
 
         JSONObject requestBody = buildLoginBody(mUsername, mPassword);
         if (requestBody != null) {
-            //todo show loading
 
-      /*      final TakeMeHomeJsonRequest mathAppJsonRequest = new TakeMeHomeJsonRequest(this, Request.Method.POST, TakeMeHomeApi.getLoginEndpoint(), requestBody) {
+            final TakeMeHomeJsonRequest mathAppJsonRequest = new TakeMeHomeJsonRequest(this, Request.Method.POST, TakeMeHomeApi.getLoginEndpoint(), requestBody) {
                 @Override
                 public int expectedCode() {
                     return HttpsURLConnection.HTTP_OK;
                 }
 
                 @Override
-                public void onSuccess(JSONObject data) {*/
-            String token = "15442";
-            JSONObject profileJSON = new JSONObject();
-            try {
-                profileJSON.putOpt("name", mUsername);
-                profileJSON.putOpt("age", 25);
-                profileJSON.putOpt("email", "sebastian.a.rocha@hotmail.com");
-                profileJSON.putOpt("gender", "M");
-                profileJSON.putOpt("photo_profile", "asd");
-                profileJSON.putOpt("alias", "sd");
-            } catch (JSONException e) {
-                //Will be OK
-            }
+                public void onSuccess(JSONObject data) {
+                    try {
+                        String token = data.getString("alias");
+                        //Save session info
+                        Session instance = Session.getInstance(LoginActivity.this);
+                        instance.setToken(token);
+                        Profile profile = new Profile();
+                        profile.fromJson(data);
+                        instance.setProfile(profile);
 
-            //Save session info
-            Session instance = Session.getInstance(LoginActivity.this);
-            instance.setToken(token);
-            Profile profile = new Profile();
-            profile.fromJson(profileJSON);
-            instance.setProfile(profile);
-
-
-            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-            finish();
-            startActivity(i);
-             /*   }
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        finish();
+                        startActivity(i);
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }
 
                 @Override
                 public void onError(int statusCode) {
@@ -180,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
             };
 
 
-            VolleyClient.getInstance(LoginActivity.this).getRequestQueue().add(mathAppJsonRequest);*/
+            VolleyClient.getInstance(LoginActivity.this).getRequestQueue().add(mathAppJsonRequest);
         }
     }
 
