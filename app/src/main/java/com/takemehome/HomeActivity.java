@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.takemehome.model.Contact;
 import com.takemehome.model.Profile;
 import com.takemehome.utils.Session;
