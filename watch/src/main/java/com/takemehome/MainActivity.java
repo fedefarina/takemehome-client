@@ -1,4 +1,4 @@
-package com.example.TakeMeHome;
+package com.takemehome;
 
 import android.content.Context;
 import android.content.Intent;
