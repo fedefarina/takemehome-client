@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.takemehome.model.Contact;
@@ -85,22 +86,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView emailHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.emailProf);
         emailHeader.setText(profile.getEmail());
 
+        ImageView imageHeader = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profile_image);
+        imageHeader.setImageBitmap(profile.getProfilePhotoBitmap());
 
         mapBtn = findViewById(R.id.mapa);
         emergencyCallBtn = findViewById(R.id.emergency_call);
         favoriteCallBtn = findViewById(R.id.favorite_call);
 
-
+        btn1 =  findViewById(R.id.imageButton5);
         uberBtn = (RideRequestButton) findViewById(R.id.uber_btn);
         mapBtn.setOnClickListener(goToMapBtnListener());
         emergencyCallBtn.setOnClickListener(getEmergencyCallBtnListener());
         favoriteCallBtn.setOnClickListener(getFavoriteBtnListener());
+        btn1.setOnClickListener(goToUber());
 
         // We want to change the text once a group is created.
         createGroupMenu = navigationView.getMenu().getItem(0);
         groupName = (TextView) findViewById(R.id.current_group_text);
 
         setupUber();
+    }
+
+    public View.OnClickListener goToUber() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //To Mocked location
+                uberBtn.performClick();
+            }
+        };
     }
 
     public View.OnClickListener goToMapBtnListener() {

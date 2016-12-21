@@ -20,23 +20,23 @@
 
             <ImageButton
 
-                android:src="@mipmap/mapa"
+                android:src="@drawable/home_map_marker"
                 android:id="@+id/mapa"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:scaleType="centerCrop"
+
                 android:layout_height="120dp"
-                android:padding="10dp"
+
                 android:background="#00000000"/>
 
             <ImageButton
-                android:src="@mipmap/emergency"
+                android:src="@drawable/ambulance"
                 android:id="@+id/emergency_call"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:scaleType="centerCrop"
+
                 android:layout_height="120dp"
-                android:padding="10dp"
+
                 android:background="#00000000"/>
 
         </LinearLayout>
@@ -48,42 +48,38 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:src="@mipmap/favorite_call"
+                android:src="@drawable/phone_in_talk"
                 android:id="@+id/favorite_call"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:scaleType="centerCrop"
+
                 android:layout_height="120dp"
-                android:padding="10dp"
                 android:background="#00000000"/>
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:layout_width="160dp"
+                android:layout_height="120dp">
 
                 <com.uber.sdk.android.rides.RideRequestButton
                     android:id="@+id/uber_btn"
-                    android:layout_width="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_height="90dp"
-                    uber:ub__style="white"/>
+                    android:layout_gravity="center"
+                    android:layout_width="160dp"
+                    android:layout_height="130dp"
+                    android:visibility="invisible"
+                    android:clickable="true" />
 
                 <ImageView
-                    android:src="@mipmap/uber_logo"
+                    android:src="@drawable/car_connected"
                     android:id="@+id/imageButton5"
                     android:layout_width="wrap_content"
-                    android:scaleType="centerCrop"
                     android:layout_height="120dp"
-                    android:padding="10dp"
-                    android:background="#00000000"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
 
             </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
 
