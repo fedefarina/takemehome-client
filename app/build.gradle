@@ -28,6 +28,7 @@ dependencies {
     compile 'com.uber.sdk:rides-android:0.5.4', {
         exclude group: 'com.google.code.findbugs'
     }
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-compat:25.0.1'
