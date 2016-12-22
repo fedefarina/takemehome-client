@@ -134,7 +134,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToRegisterPage() {
-        //TODO
+        Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(i);
     }
 
     private void userLogin(String mUsername, String mPassword) {
@@ -148,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                     return HttpsURLConnection.HTTP_OK;
                 }
 
+                @SuppressWarnings("Duplicates")
                 @Override
                 public void onSuccess(JSONObject data) {
                     try {
@@ -160,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                         instance.setProfile(profile);
 
                         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                        finish();
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     } catch (JSONException e) {
                         Log.e(TAG, e.toString());

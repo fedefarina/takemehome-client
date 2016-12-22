@@ -85,8 +85,7 @@ public abstract class TakeMeHomeJsonRequest extends JsonObjectRequest {
 
 
     private void showFirstError(JSONObject responseJSON) throws JSONException {
-        JSONArray jsonArray = responseJSON.optJSONArray("errors");
-        String message = jsonArray.getJSONObject(0).getString("message");
+        String message = responseJSON.getString("error");
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
