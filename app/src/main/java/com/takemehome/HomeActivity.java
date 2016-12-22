@@ -251,9 +251,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Create a NotificationCompat.Builder to build a standard notification
         // then extend it with the WearableExtender
         Notification notif = new NotificationCompat.Builder(getApplicationContext())
-                .setContentTitle("Returning home...")
-                .setContentText("I'll take care of you")
-                .setSmallIcon(R.mipmap.ic_user)
+                .setContentTitle("Volviendo a casa")
+                .setContentText("Yo te voy a cuidar...")
+                .setSmallIcon(R.mipmap.takemehome)
                 .extend(wearableExtender)
                 .build();
 
