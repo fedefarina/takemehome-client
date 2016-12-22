@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical" android:layout_width="match_parent"
-                android:background="@color/white"
-                android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:layout_width="match_parent">
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.TextInputLayout
+        <android.support.design.widget.TextInputLayout
             android:layout_margin="16dp"
             android:id="@+id/input_layout_groupname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <EditText
+            <EditText
                 android:id="@+id/group_name"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
@@ -17,9 +21,9 @@
                 android:hint="@string/group_name"
                 android:maxLines="1"
                 android:singleLine="true"/>
-    </android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.TextInputLayout>
 
-    <TextView
+        <TextView
             android:id="@+id/textview"
             android:layout_below="@id/input_layout_groupname"
             android:textSize="22sp"
@@ -28,14 +32,14 @@
             android:layout_height="wrap_content"
             android:text="@string/contacts"/>
 
-    <android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/groupname_recycler"
             android:layout_marginTop="8dp"
             android:overScrollMode="never"
             android:layout_below="@+id/textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    <Button
+        <Button
             android:layout_below="@+id/groupname_recycler"
             android:layout_marginTop="60dp"
             android:padding="16dp"
@@ -46,4 +50,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create"/>
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
