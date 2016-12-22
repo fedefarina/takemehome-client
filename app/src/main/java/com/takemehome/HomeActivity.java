@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         emailHeader.setText(profile.getEmail());
 
         ImageView imageHeader = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profile_image);
-        imageHeader.setImageBitmap(profile.getProfilePhotoBitmap());
+        imageHeader.setImageBitmap(profile.getProfilePhotoBitmap(this));
 
         mapBtn = findViewById(R.id.mapa);
         emergencyCallBtn = findViewById(R.id.emergency_call);
