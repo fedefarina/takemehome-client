@@ -118,8 +118,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //To Mocked location
-                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f (%s)", TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE, "Where the party is at");
+                String uri = String.format(Locale.ENGLISH
+                        , "http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f"
+                        , FROM_LOCATION_LATITUDE, FROM_LOCATION_LONGITUDE
+                        , TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
                 startActivity(intent);
