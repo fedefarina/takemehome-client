@@ -61,6 +61,15 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
         map = googleMap;
         centerMap(false);
 
+        TakeMeHomeApp app = (TakeMeHomeApp) getApplication();
+        String firstName = "Flavio";
+        String secondName = "Rodrigo";
+
+        if (app.getContactFavs() != null && app.getContactFavs().size() >= 2) {
+            firstName = app.getContactFavs().get(0).getName();
+            secondName = app.getContactFavs().get(1).getName();
+        }
+
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setBuildingsEnabled(false);
         map.getUiSettings().setAllGesturesEnabled(true);
@@ -79,12 +88,12 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
 
         map.addMarker(new MarkerOptions()
                 .position(member1Location)
-                .title("Flavio")
+                .title(firstName)
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_black_24dp)));
 
         map.addMarker(new MarkerOptions()
                 .position(member2Location)
-                .title("Rodrigo")
+                .title(secondName)
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_black_24dp)));
 
         map.addMarker(new MarkerOptions()
