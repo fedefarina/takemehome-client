@@ -13,6 +13,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private View favoriteCallBtn;
 
     private Toolbar toolbar;
-    private TextView groupName;
+    private TextView groupNameTv;
     private TextView createGroupText;
     private RideRequestButton uberBtn;
     private TakeMeHomeApp app;
@@ -99,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // We want to change the text once a group is created.
         createGroupMenu = navigationView.getMenu().getItem(0);
-        groupName = (TextView) findViewById(R.id.current_group_text);
+        groupNameTv = (TextView) findViewById(R.id.current_group_text);
 
         setupUber();
     }
@@ -178,9 +181,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
-        if (app.getGroupName() != null) {
+        final String groupName = app.getGroupName();
+        if (groupName != null) {
             createGroupMenu.setTitle("Elegir contacto favorito");
-            groupName.setText("Grupo actual: " + app.getGroupName());
+
+            final String labelText = "Grupo actual: ";
+            this.groupNameTv.setText(labelText + groupName);
+
+            final SpannableStringBuilder sb = new SpannableStringBuilder(labelText + groupName);
+
+            final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD); // Span to make text bold
+            final StyleSpan iss = new StyleSpan(android.graphics.Typeface.ITALIC); //Span to make text italic
+            sb.setSpan(bss, 0, labelText.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE); // make first 4 characters Bold
+            sb.setSpan(iss, labelText.length(), labelText.length() + groupName.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE); // make last 2 characters Italic
+            this.groupNameTv.setText(sb);
+
         }
 
     }
