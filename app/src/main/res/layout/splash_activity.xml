@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
+                android:background="@drawable/background_gradient"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_manage"
-            android:layout_centerInParent="true"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/app_name"
+                  android:textStyle="italic|bold"
+                  android:typeface="monospace"
+                  android:layout_centerInParent="true"
+                  android:textColor="@color/white"
+                  android:textSize="40sp"/>
 
 </RelativeLayout>
