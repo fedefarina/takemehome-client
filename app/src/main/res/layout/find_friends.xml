@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical" android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <include
-            layout="@layout/toolbar"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="vertical" android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <FrameLayout
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-</LinearLayout>
+
+
+    <include
+            layout="@layout/toolbar"/>
+
+    <ImageView
+            android:id="@+id/center_map"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="24dp"
+            android:src="@drawable/map_find_me"/>
+</FrameLayout>

@@ -1,10 +1,12 @@
 package com.takemehome;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -33,6 +35,13 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.find_friends));
 
+        findViewById(R.id.center_map).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                centerMap(true);
+            }
+        });
+
         setSupportActionBar(toolbar);
 
         //noinspection ConstantConditions
@@ -40,8 +49,8 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        MapFragment mapFragment = MapFragment.newInstance();
-        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.map, mapFragment);
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
@@ -50,7 +59,12 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        centerMap();
+        centerMap(false);
+
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.setBuildingsEnabled(false);
+        map.getUiSettings().setAllGesturesEnabled(true);
+
         LatLng fromLocation = new LatLng(TakeMeHomeConstants.FROM_LOCATION_LATITUDE
                 , TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
 
@@ -80,7 +94,7 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
 
     }
 
-    private void centerMap() {
+    private void centerMap(boolean animated) {
 
         LatLng fromLocation = new LatLng(TakeMeHomeConstants.FROM_LOCATION_LATITUDE
                 , TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
@@ -94,7 +108,11 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
                         .build()
         );
 
-        map.moveCamera(update);
+        if (animated) {
+            map.animateCamera(update, 500, null);
+        } else {
+            map.moveCamera(update);
+        }
     }
 
     @Override
