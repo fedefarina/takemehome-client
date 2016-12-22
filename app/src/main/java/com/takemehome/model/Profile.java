@@ -1,12 +1,13 @@
 package com.takemehome.model;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
 import android.util.Log;
-
+import com.takemehome.R;
 import com.takemehome.utils.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,14 +96,20 @@ public class Profile implements Serializable, Parcelable {
         return photo_profile;
     }
 
-    public Bitmap getProfilePhotoBitmap() {
+    public Bitmap getProfilePhotoBitmap(Context context) {
         Bitmap bitmap = null;
         try {
-            byte[] decodedBytes = Base64.decode(photo_profile,0);
+            byte[] decodedBytes = Base64.decode(photo_profile, 0);
             bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.e("Bad base 64", photo_profile);
         }
+
+        if (bitmap == null) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(),
+                    R.mipmap.ic_user);
+        }
+
         return bitmap;
     }
 
