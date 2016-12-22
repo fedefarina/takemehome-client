@@ -9,13 +9,14 @@
 
     <TextView
         android:layout_margin="16dp"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Select favourite contact:"/>
+        android:text="Seleccionar el contacto favorito"/>
     <android.support.v7.widget.RecyclerView
+        android:overScrollMode="never"
         android:layout_marginLeft="16dp"
         android:id="@+id/favs_recycler"
         android:layout_width="match_parent"

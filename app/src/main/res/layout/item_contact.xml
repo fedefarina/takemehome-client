@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="50dp">
 
     <android.support.v7.widget.AppCompatCheckBox
+        android:layout_marginLeft="16dp"
         android:id="@+id/checkbox"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:layout_toRightOf="@+id/checkbox"
-        android:src="@mipmap/ic_user"
-        android:id="@+id/contact_profile"
+    <TextView
         android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
-    <TextView
-        android:layout_marginLeft="18dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/contact_profile"
+        android:layout_toRightOf="@+id/checkbox"
         android:id="@+id/contact_name"
         android:textSize="16sp"
         android:text="Manuel Ruiz Echazu"

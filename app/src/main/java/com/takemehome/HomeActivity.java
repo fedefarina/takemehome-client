@@ -179,8 +179,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
 
         if (app.getGroupName() != null) {
-            createGroupMenu.setTitle("Pick favourite contact");
-            groupName.setText("Current group is: " + app.getGroupName());
+            createGroupMenu.setTitle("Elegir contacto favorito");
+            groupName.setText("Grupo actual: " + app.getGroupName());
         }
 
     }
