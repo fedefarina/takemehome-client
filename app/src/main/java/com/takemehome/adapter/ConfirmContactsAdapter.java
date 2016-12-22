@@ -47,13 +47,13 @@ public class ConfirmContactsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             final Contact contact = contacts.get(position);
 
             contactsHolder.textView.setText(contact.getName());
-
-
+/*
             Picasso.with(context)
                     .load(contact.getImage())
                     .placeholder(R.mipmap.ic_user)
                     .error(R.mipmap.ic_user)
                     .into(contactsHolder.imageView);
+*/
 
 //            contactsHolder.imageView.setBackgroundResource(contact.getImage());
         }
