@@ -2,7 +2,6 @@ package com.takemehome;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,8 +21,8 @@ import com.takemehome.api.TakeMeHomeApi;
 import com.takemehome.http.TakeMeHomeJsonRequest;
 import com.takemehome.http.VolleyClient;
 import com.takemehome.model.Profile;
-import com.takemehome.utils.LocationManager;
 import com.takemehome.utils.Session;
+import com.takemehome.utils.TakeMeHomeConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -226,11 +225,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             requestBody.putOpt(KEY_PHOTO_PROFILE, encodedImage);
 
-            Location lastLocation = LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
-            if (lastLocation != null) {
-                requestBody.put(KEY_LATITUDE, lastLocation.getLatitude() + "");
-                requestBody.put(KEY_LONGITUDE, lastLocation.getLongitude());
-            }
+            requestBody.put(KEY_LATITUDE, TakeMeHomeConstants.FROM_LOCATION_LATITUDE);
+            requestBody.put(KEY_LONGITUDE, TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
         } catch (JSONException e) {
             //Never will happen
         }

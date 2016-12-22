@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import com.takemehome.utils.LocationManager;
 import com.takemehome.utils.Session;
 
 /**
@@ -19,9 +18,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
-
-        //Fetch last location
-        LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
 
         new Handler().postDelayed(new Runnable() {
             @Override
