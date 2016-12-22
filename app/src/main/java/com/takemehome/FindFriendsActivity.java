@@ -68,8 +68,8 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
         centerMap(false);
 
         TakeMeHomeApp app = (TakeMeHomeApp) getApplication();
-        String firstName = "Flavio";
-        String secondName = "Rodrigo";
+        String firstName = "Agus";
+        String secondName = "Aduriz";
 
         if (app.getContactFavs() != null && app.getContactFavs().size() >= 2) {
             Contact contact1 = app.getContactFavs().get(0);

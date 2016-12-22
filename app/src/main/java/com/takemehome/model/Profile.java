@@ -32,7 +32,7 @@ public class Profile implements Serializable, Parcelable {
     private String photo_profile;
 
     public static final Creator<Profile> CREATOR
-            = new Creator<Profile>() {
+    = new Creator<Profile>() {
         public Profile createFromParcel(Parcel in) {
             return new Profile(in);
         }
@@ -107,7 +107,7 @@ public class Profile implements Serializable, Parcelable {
 
         if (bitmap == null) {
             bitmap = BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.ic_user);
+            R.drawable.manu);
         }
 
         return bitmap;
