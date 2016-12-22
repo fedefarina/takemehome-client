@@ -54,7 +54,7 @@ public class FavouriteContactActivity extends AppCompatActivity {
                 // Making the contact come first on the list
                 contacts.remove(contact);
                 contacts.add(0, contact);
-                Toast.makeText(getApplicationContext(), contact.getName() + " Is your new favourite contact", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), contact.getName() + " es tu nuevo contacto favorito", Toast.LENGTH_SHORT).show();
                 finish();
             }
 

@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -122,9 +122,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 String uri = String.format(Locale.ENGLISH
-                        , "http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f"
-                        , FROM_LOCATION_LATITUDE, FROM_LOCATION_LONGITUDE
-                        , TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE);
+                , "http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f"
+                , FROM_LOCATION_LATITUDE, FROM_LOCATION_LONGITUDE
+                , TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
                 startActivity(intent);
@@ -151,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if (app.getContactFavs() != null) {
                     callContact();
                 } else {
-                    Toast.makeText(getApplicationContext(), "No group created yet...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.no_group_cerated), Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -249,10 +249,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // Takes us to facultad de ingenieria and drops at alto palermo
     public void setupUber() {
         RideParameters rideParams = new RideParameters.Builder()
-                .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
-                .setPickupLocation(FROM_LOCATION_LATITUDE, FROM_LOCATION_LONGITUDE, "Facultad de Ingenieria", ",Paseo Colon 850")
-                .setDropoffLocation(TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE, "Casa de Kevin", "Calle falsa 1234")
-                .build();
+        .setProductId("a1111c8c-c720-46c3-8534-2fcdd730040d")
+        .setPickupLocation(FROM_LOCATION_LATITUDE, FROM_LOCATION_LONGITUDE, "Facultad de Ingenieria", ",Paseo Colon 850")
+        .setDropoffLocation(TO_LOCATION_LATITUDE, TO_LOCATION_LONGITUDE, "Casa de Kevin", "Calle falsa 1234")
+        .build();
 
         uberBtn.setRideParameters(rideParams);
     }
@@ -260,21 +260,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void sendNotification() {
         // Create a WearableExtender to add functionality for wearables
         NotificationCompat.WearableExtender wearableExtender =
-                new NotificationCompat.WearableExtender()
-                        .setHintHideIcon(true);
+        new NotificationCompat.WearableExtender()
+        .setHintHideIcon(true);
 
         // Create a NotificationCompat.Builder to build a standard notification
         // then extend it with the WearableExtender
         Notification notif = new NotificationCompat.Builder(getApplicationContext())
-                .setContentTitle("Volviendo a casa")
-                .setContentText("Yo te voy a cuidar...")
-                .setSmallIcon(R.mipmap.takemehome)
-                .extend(wearableExtender)
-                .build();
+        .setContentTitle("Volviendo a casa")
+        .setContentText("Yo te voy a cuidar...")
+        .setSmallIcon(R.mipmap.takemehome)
+        .extend(wearableExtender)
+        .build();
 
         // Get an instance of the NotificationManager service
         NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(getApplicationContext());
+        NotificationManagerCompat.from(getApplicationContext());
 
         // Issue the notification with notification manager.
         notificationManager.notify(1101, notif);

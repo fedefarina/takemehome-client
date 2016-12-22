@@ -1,5 +1,7 @@
 package com.takemehome;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -8,18 +10,20 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.*;
+import com.takemehome.model.Contact;
 import com.takemehome.utils.TakeMeHomeConstants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by federicofarina on 12/20/16.
  */
-public class FindFriendsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class FindFriendsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
 
+    Map<String, Contact> contactsMap = new HashMap<>();
     private GoogleMap map;
     private Toolbar toolbar;
 
@@ -59,6 +63,8 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        map.setOnMarkerClickListener(this);
+
         centerMap(false);
 
         TakeMeHomeApp app = (TakeMeHomeApp) getApplication();
@@ -66,8 +72,12 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
         String secondName = "Rodrigo";
 
         if (app.getContactFavs() != null && app.getContactFavs().size() >= 2) {
-            firstName = app.getContactFavs().get(0).getName();
-            secondName = app.getContactFavs().get(1).getName();
+            Contact contact1 = app.getContactFavs().get(0);
+            firstName = contact1.getName();
+            Contact contact2 = app.getContactFavs().get(1);
+            secondName = contact2.getName();
+            contactsMap.put(firstName, contact1);
+            contactsMap.put(secondName, contact2);
         }
 
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -75,46 +85,45 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
         map.getUiSettings().setAllGesturesEnabled(true);
 
         LatLng fromLocation = new LatLng(TakeMeHomeConstants.FROM_LOCATION_LATITUDE
-                , TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
+        , TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
 
         LatLng homeLocation = new LatLng(TakeMeHomeConstants.TO_LOCATION_LATITUDE
-                , TakeMeHomeConstants.TO_LOCATION_LONGITUDE);
-
-
-        map.addMarker(new MarkerOptions()
-                .position(fromLocation)
-                .title("Federico")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_circle_black_48dp)));
+        , TakeMeHomeConstants.TO_LOCATION_LONGITUDE);
 
         map.addMarker(new MarkerOptions()
-                .position(member1Location)
-                .title(firstName)
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_black_24dp)));
+        .position(fromLocation)
+        .title("Me")
+        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_circle_black_48dp)));
 
         map.addMarker(new MarkerOptions()
-                .position(member2Location)
-                .title(secondName)
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_black_24dp)));
+        .position(member1Location)
+        .title(firstName)
+        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_black_24dp)));
 
         map.addMarker(new MarkerOptions()
-                .position(homeLocation)
-                .title("Casa")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_home_black_48dp)));
+        .position(member2Location)
+        .title(secondName)
+        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_person_pin_black_24dp)));
+
+        map.addMarker(new MarkerOptions()
+        .position(homeLocation)
+        .title("Casa")
+        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_home_black_48dp)));
 
     }
 
     private void centerMap(boolean animated) {
 
         LatLng fromLocation = new LatLng(TakeMeHomeConstants.FROM_LOCATION_LATITUDE
-                , TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
+        , TakeMeHomeConstants.FROM_LOCATION_LONGITUDE);
 
         CameraUpdate update = CameraUpdateFactory.newCameraPosition(
-                new CameraPosition.Builder()
-                        .target(fromLocation)
-                        .zoom(12.0f)
-                        .bearing(0)
-                        .tilt(0)
-                        .build()
+        new CameraPosition.Builder()
+        .target(fromLocation)
+        .zoom(12.0f)
+        .bearing(0)
+        .tilt(0)
+        .build()
         );
 
         if (animated) {
@@ -134,5 +143,16 @@ public class FindFriendsActivity extends AppCompatActivity implements OnMapReady
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Contact contact = contactsMap.get(marker.getTitle());
+        if (contact != null) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + contact.getNumber()));
+            startActivity(callIntent);
+        }
+        return false;
     }
 }
