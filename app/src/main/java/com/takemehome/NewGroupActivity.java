@@ -22,7 +22,8 @@ public class NewGroupActivity extends AppCompatActivity implements ContactsAdapt
 
     private static final String TAG = NewGroupActivity.class.getSimpleName();
     private Toolbar toolbar;
-    // too lazy to remove indexes whenn contact is unchecked.
+
+    // Too lazy to remove indexes when contact is unchecked.
     private List<Contact> contactFavs = new ArrayList<>();
 
     @Override

@@ -31,13 +31,9 @@ import java.util.List;
 public class PickContactsFragment extends Fragment {
 
     Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-//Uri contentUri =
-//        ContactsContract.Contacts.CONTENT_FILTER_URI;
 
     private List<Contact> contacts = new ArrayList<>();
     private ContactsAdapter.ContactSelectedListener listener;
-
-
 
 
     private static final String[] PROJECTION = {

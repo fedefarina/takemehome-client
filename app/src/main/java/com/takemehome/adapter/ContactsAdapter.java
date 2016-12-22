@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 import com.takemehome.R;
 import com.takemehome.model.Contact;
 
@@ -30,6 +28,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface ContactSelectedListener {
         void onContactSelected(Contact contact);
+
         void onContactDeselected(Contact contact);
     }
 
@@ -74,11 +73,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             contactsHolder.checkBox.setChecked(contact.getChecked());
 //            contactsHolder.imageView.setBackgroundResource(contact.getImage());
 
-            Picasso.with(context)
+/*            Picasso.with(context)
                     .load(contact.getImage())
                     .placeholder(R.mipmap.ic_user)
                     .error(R.mipmap.ic_user)
-                    .into(contactsHolder.imageView);
+                    .into(contactsHolder.imageView);*/
 
         }
     }
