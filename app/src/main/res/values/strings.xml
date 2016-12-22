@@ -23,4 +23,7 @@
     <string name="name">Name</string>
     <string name="create_group">Crear grupo</string>
     <string name="find_friends">Ver amigos</string>
+    <string name="contacts">Contactos</string>
+    <string name="group_name">Nombre del grupo</string>
+    <string name="create">Crear grupo</string>
 </resources>
