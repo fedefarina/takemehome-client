@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.takemehome.adapter.ConfirmContactsAdapter;
@@ -22,6 +23,7 @@ public class FavouriteContactActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TakeMeHomeApp app;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +32,14 @@ public class FavouriteContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favourite);
 
         app = (TakeMeHomeApp)getApplication();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Favoritos");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.favs_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

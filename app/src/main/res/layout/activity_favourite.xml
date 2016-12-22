@@ -8,13 +8,26 @@
     </include>
 
     <TextView
-        android:layout_margin="16dp"
-        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Seleccionar el contacto favorito"/>
+
+    <TextView
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="El contacto favorito dentro del grupo es el contacto que se llamará por defecto al utilizar la opción de llamado. Puede modificarse cuantas veces quieras"
+        android:id="@+id/textView" />
+
     <android.support.v7.widget.RecyclerView
         android:overScrollMode="never"
         android:layout_marginLeft="16dp"
