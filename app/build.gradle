@@ -1,13 +1,8 @@
     apply plugin: 'com.android.application'
 
 android {
-<<<<<<< HEAD
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
-=======
     compileSdkVersion 25
     buildToolsVersion "23.0.3"
->>>>>>> origin/dev
     defaultConfig {
         applicationId "takemehome.com.takemehome"
         minSdkVersion 15
