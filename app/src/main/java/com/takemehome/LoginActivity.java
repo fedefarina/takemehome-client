@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +33,8 @@ import javax.net.ssl.HttpsURLConnection;
  * A login screen that offers login via username/password.
  */
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
@@ -121,24 +124,24 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            userLogin(username, password);
-        }
+        //     if (cancel) {
+        // There was an error; don't attempt login and focus the first
+        // form field with an error.
+        //       focusView.requestFocus();
+        //      } else {
+        userLogin(username, password);
+        //      }
     }
 
     private void goToRegisterPage() {
-        //TODO
+        Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(i);
     }
 
     private void userLogin(String mUsername, String mPassword) {
 
         JSONObject requestBody = buildLoginBody(mUsername, mPassword);
         if (requestBody != null) {
-            //todo show loading
 
             final TakeMeHomeJsonRequest mathAppJsonRequest = new TakeMeHomeJsonRequest(this, Request.Method.POST, TakeMeHomeApi.getLoginEndpoint(), requestBody) {
                 @Override
@@ -146,21 +149,24 @@ public class LoginActivity extends AppCompatActivity {
                     return HttpsURLConnection.HTTP_OK;
                 }
 
+                @SuppressWarnings("Duplicates")
                 @Override
                 public void onSuccess(JSONObject data) {
-                    String token = data.optString("accessToken");
-                    JSONObject profileJSON = data.optJSONObject("profile");
+                    try {
+                        String token = data.getString("alias");
+                        //Save session info
+                        Session instance = Session.getInstance(LoginActivity.this);
+                        instance.setToken(token);
+                        Profile profile = new Profile();
+                        profile.fromJson(data);
+                        instance.setProfile(profile);
 
-                    //Save session info
-                    Session instance = Session.getInstance(LoginActivity.this);
-                    instance.setToken(token);
-                    Profile profile = new Profile();
-                    profile.fromJson(profileJSON);
-                    instance.setProfile(profile);
-
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(i);
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.toString());
+                    }
                 }
 
                 @Override

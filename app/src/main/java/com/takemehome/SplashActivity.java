@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import com.takemehome.utils.LocationManager;
 import com.takemehome.utils.Session;
 
 /**
@@ -20,16 +19,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
-        //Fetch last location
-        LocationManager.getInstance(getApplicationContext()).fetchLastLocation();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent();
                 //If user is logged in
                 if (Session.getInstance(SplashActivity.this).isLoggedIn()) {
-                    intent.setClass(SplashActivity.this, MainActivity.class);
+                    intent.setClass(SplashActivity.this, HomeActivity.class);
                 } else {
                     intent.setClass(SplashActivity.this, LoginActivity.class);
                 }
